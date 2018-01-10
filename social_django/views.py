@@ -44,6 +44,7 @@ def complete(request, backend, *args, **kwargs):
                        *args, **kwargs)
     log.debug("do_complete() returned {}".format(rv))
     log.debug("request.user ends with {}".format(request.user))
+    log.debug("session_id is {}".format(request.session.session_key))
     return rv
 
 
