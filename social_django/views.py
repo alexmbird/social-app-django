@@ -23,11 +23,21 @@ def auth(request, backend):
     return do_auth(request.backend, redirect_name=REDIRECT_FIELD_NAME)
 
 
+# AH - add debug logging
+import logging
+log = logging.getLogger("social")
+
 @never_cache
 @csrf_exempt
 @psa('{0}:complete'.format(NAMESPACE))
 def complete(request, backend, *args, **kwargs):
     """Authentication complete view"""
+    print("Actually in complete view")
+    log.debug("In view 'complete'")
+    log.debug("request: {}".format(request))
+    log.debug("backend: {}".format(backend))
+    log.debug("args: {}".format(args))
+    log.debug("kwargs: {}".format(kwargs))
     return do_complete(request.backend, _do_login, request.user,
                        redirect_name=REDIRECT_FIELD_NAME, request=request,
                        *args, **kwargs)
