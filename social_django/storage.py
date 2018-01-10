@@ -85,11 +85,17 @@ class DjangoUserMixin(UserMixin):
 
     @classmethod
     def get_user(cls, pk=None, **kwargs):
+        import logging
+        log = logging.getLogger('social')
+        log.debug("in storage.py get_user()")
         if pk:
             kwargs = {'pk': pk}
         try:
-            return cls.user_model().objects.get(**kwargs)
+            u = cls.user_model().objects.get(**kwargs)
+            log.debug("Loaded user {}".format(u))
+            return u
         except cls.user_model().DoesNotExist:
+            log.debug("Could not find user with id {}".format(pk))
             return None
 
     @classmethod
