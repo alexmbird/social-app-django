@@ -38,9 +38,13 @@ def complete(request, backend, *args, **kwargs):
     log.debug("backend: {}".format(backend))
     log.debug("args: {}".format(args))
     log.debug("kwargs: {}".format(kwargs))
-    return do_complete(request.backend, _do_login, request.user,
+    log.debug("request.user starts with {}".format(request.user))
+    rv = do_complete(request.backend, _do_login, request.user,
                        redirect_name=REDIRECT_FIELD_NAME, request=request,
                        *args, **kwargs)
+    log.debug("do_complete() returned {}".format(rv))
+    log.debug("request.user ends with {}".format(request.user))
+    return rv
 
 
 @never_cache
